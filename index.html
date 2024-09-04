@@ -13,207 +13,65 @@
     <meta name="twitter:title" content="Finae AI"/>
     <meta name="twitter:description" content="Generate fully working AI tools in seconds"/>
     <meta name="twitter:image" content="/og-image.png"/>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
-    <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: #1a1a1a;
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
-            transition: filter 0.3s ease-in-out;
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3182ce',
+                        secondary: '#4fd1c5',
+                        accent: '#f6e05e',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
         }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-        }
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .nav-buttons a {
-            margin-left: 20px;
-            text-decoration: none;
-            color: #ffffff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-        .nav-buttons a:hover {
-            background-color: #333;
-        }
-        .nav-buttons a.signup {
-            background-color: #4CAF50;
-        }
-        .nav-buttons a.signup:hover {
-            background-color: #45a049;
-        }
-        .hero {
-            text-align: center;
-            padding: 50px 0;
-        }
-        h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-        .headline-subtitle {
-            font-size: 24px;
-            color: #4CAF50;
-            display: block;
-            margin-top: 10px;
-        }
-        .input-container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        textarea {
-            width: 100%;
-            padding: 15px;
-            border-radius: 5px;
-            border: none;
-            background-color: #333;
-            color: #fff;
-            font-size: 16px;
-            margin-bottom: 20px;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 18px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .examples {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 40px;
-        }
-        .example-chip {
-            background-color: #333;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .example-chip:hover {
-            background-color: #444;
-        }
-        footer {
-            text-align: center;
-            padding: 40px 0;
-            color: #bbb;
-        }
-
-        #output-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 20, 40, 0.9);
-            z-index: 1000;
-            display: none;
-            overflow: hidden;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #output-container.visible {
-            opacity: 1;
-            display: flex;
-        }
-
-        #output-area {
-            width: 80%;
-            height: 80%;
-            max-width: 800px;
-            margin: auto;
-            background-color: rgba(0, 20, 40, 0.9);
-            color: #00ff00;
-            padding: 20px;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            line-height: 1.5;
-            overflow-y: auto;
-            box-sizing: border-box;
-            border: none;
-            outline: none;
-            border-radius: 10px;
-        }
-
-        #close-output {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: transparent;
-            border: none;
-            color: #fff;
-            font-size: 24px;
-            cursor: pointer;
-        }
-        .subtitle-small {
-            font-size: 18px;
-            color: #888;
-            margin-bottom: 40px;
-        }
-    </style>
+    </script>
 </head>
-<body>
-    <div class="container">
-        <header>
-            <div class="logo">Finae AI</div>
-            <div class="nav-buttons">
-                <a href="/login">Log In</a>
-                <a href="/signup" class="signup">Sign Up</a>
+<body class="bg-gray-50 text-gray-800 font-sans">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <header class="flex justify-between items-center py-6 border-b border-gray-200">
+            <div class="text-2xl font-bold text-primary">
+                <img src="/static/finae_labs.png" alt="Logo" style="width: 170px; height: auto;">
+            </div>
+            <div class="space-x-4">
+                <a href="/login" class="text-gray-600 hover:text-primary transition-colors">Log In</a>
+                <a href="/signup" class="bg-primary text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors">Sign Up</a>
             </div>
         </header>
         <main>
-            <section class="hero">
-                <h1>
-                    Say hello to your virtual IT team!
-                    <span class="headline-subtitle">How can we help you today?</span>
+            <section class="text-center py-20">
+                <h1 class="text-5xl font-bold mb-4">
+                    Idea to application, powered by English
+                    <span class="block text-2xl text-secondary mt-4 font-medium">Easily build powerful business solutions</span>
                 </h1>
-                <div class="input-container">
-                    <textarea id="idea-input" rows="4" placeholder="Decribe your multi-agent idea, e.g. Competitor Analysis"></textarea>
-                    <button id="generate-button">Create</button>
+                <div class="max-w-2xl mx-auto">
+                    <textarea id="idea-input" rows="8" class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-primary focus:border-primary mb-4" placeholder="Build an application for ..."></textarea>
+                    <button id="generate-button" class="bg-primary text-white px-6 py-3 rounded-md text-lg font-semibold hover:bg-blue-700 transition-colors">Build now</button>
                 </div>
-                <div class="examples">
-                    <div class="example-chip">Income expense tracker</div>
-                    <div class="example-chip">Shopify product inventory sync</div>
-                    <div class="example-chip">Customer insights dashboard</div>
-                    <div class="example-chip">Invoice manager</div>
-                    <div class="example-chip">Product lookup tool</div>
-                    <div class="example-chip">PDF merger</div>
-                    <div class="example-chip">Competitor research agent</div>
+                <div class="flex flex-wrap justify-center gap-2 mt-9">
+                    <div class="example-chip bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium cursor-pointer hover:bg-gray-300 transition-colors">Income expense tracker</div>
+                    <div class="example-chip bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium cursor-pointer hover:bg-gray-300 transition-colors">Shopify product inventory sync</div>
+                    <div class="example-chip bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium cursor-pointer hover:bg-gray-300 transition-colors">Customer insights dashboard</div>
+                    <div class="example-chip bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium cursor-pointer hover:bg-gray-300 transition-colors">Invoice manager</div>
+                    <div class="example-chip bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium cursor-pointer hover:bg-gray-300 transition-colors">Product lookup tool</div>
+                    <div class="example-chip bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium cursor-pointer hover:bg-gray-300 transition-colors">PDF merger</div>
+                    <div class="example-chip bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium cursor-pointer hover:bg-gray-300 transition-colors">Competitor research agent</div>
                 </div>
             </section>
-            <section id="output-container">
-                <button id="close-output">&times;</button>
-                <pre id="output-area"></pre>
+            <section id="output-container" class="fixed inset-0 bg-gray-900 bg-opacity-90 z-50 hidden opacity-0 transition-opacity duration-300 ease-in-out flex justify-center items-center">
+                <button id="close-output" class="absolute top-4 right-4 text-white text-3xl">&times;</button>
+                <pre id="output-area" class="w-4/5 h-4/5 max-w-3xl bg-white text-gray-800 p-6 font-mono text-sm leading-relaxed overflow-y-auto rounded-lg shadow-lg"></pre>
             </section>
         </main>
-        <footer>
-            <p>&copy; 2024, Finae Labs Inc.</p>
-            <p>Contact us at <a href="mailto:founders@finae.ai">founders@finae.ai</a></p>
+        <footer class="text-center py-10 text-gray-600 border-t border-gray-200">
+            <p>&copy; 2024 Finae Labs Inc. All rights reserved.</p>
+            <p>Contact us at <a href="mailto:founders@finae.ai" class="text-primary hover:underline">founders@finae.ai</a></p>
         </footer>
     </div>
     <script>
@@ -240,13 +98,13 @@
             function showOutput() {
                 outputContainer.style.display = 'flex';
                 setTimeout(() => {
-                    outputContainer.classList.add('visible');
+                    outputContainer.classList.remove('opacity-0');
                 }, 50);
                 document.body.style.overflow = 'hidden';
             }
 
             function hideOutput() {
-                outputContainer.classList.remove('visible');
+                outputContainer.classList.add('opacity-0');
                 setTimeout(() => {
                     outputContainer.style.display = 'none';
                     document.body.style.overflow = 'auto';
